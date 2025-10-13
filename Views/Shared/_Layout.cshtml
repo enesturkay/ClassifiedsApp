@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/styles.css" />
+
+</head>
+<body>
+<nav class="navbar py-3 custom-border">
+  <div class="container-md justify-content-center">
+    
+    <!-- Sol: Logo -->
+    <a class="navbar-brand mx-2" asp-controller="Home" asp-action="Index">
+      <img src="~/image/Bizden.svg" alt="Logo" width="115" height="50" class="d-inline-block align-text-top">
+    </a>
+
+<a asp-controller="Create" asp-action="Advert" class="btn my-orange-bg py-2 mx-auto" style="width: 300px;">
+    İlan Oluştur
+</a>
+
+
+    <!-- Sağ: Arama ve Dropdown -->
+    <div class="d-flex justify-content-center gap-1">
+      <form class="d-flex" role="search">
+        <input class="form-control" type="search" placeholder="Arama yap" aria-label="Search" />
+      </form>
+
+      <div class="dropdown">
+        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          İstanbul-Avcılar
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">Another action</a></li>
+          <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+    @RenderBody()
+</body>
+</html>

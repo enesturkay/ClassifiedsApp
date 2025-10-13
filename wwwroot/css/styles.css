@@ -1,0 +1,31 @@
+.my-orange-bg {
+  background-color: #fb4d0e;
+  color: white;
+  border: none;
+}
+.my-orange-bg:hover {
+  background-color: #fb4d0e;
+  color: white;
+  border: none;
+}
+.navbar {
+    font-family: sans-serif; /* İstediğiniz font adını buraya yazın */
+}
+.my-gray-bg {
+  background-color: #918F8e;
+  color: white;
+  border: none;
+}
+.custom-border {
+   border-bottom: 2px solid #f0f0f0;
+/* istediğin renk ve kalınlık */
+}
+/* Çok satırlı kısıtlama için özel CSS */
+.line-clamp-3 {
+  overflow: hidden; /* Taşmayı gizler */
+  display: -webkit-box; /* Flexbox'ın eski versiyonu */
+  -webkit-line-clamp: 3; /* Gösterilecek maksimum satır sayısı */
+  -webkit-box-orient: vertical; /* İçeriğin dikey yönde hizalanmasını sağlar */
+  /* Gerekirse tarayıcı uyumluluğu için -moz-box-orient: vertical; ve line-height ayarı da eklenebilir. */
+}
+

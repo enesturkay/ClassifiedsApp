@@ -1,0 +1,53 @@
+@using ilanApp.Models
+@model advertInfo
+<div class="container my-5">
+  <div class="card shadow-lg border-0 rounded-4 mx-auto" style="max-width: 600px;">
+    <div class="card-body p-4">
+      <h2 class="h4 text-center mb-4 fw-bold" style="color: #fb4d0e">Bize Biraz İlandan Bahset</h2>
+      <div class="validation-summary-errors"></div>
+      <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+          <label asp-for="title" class="form-label fw-semibold">İlan Başlığı</label>
+          <input asp-for="title" class="form-control form-control-lg" placeholder="Örneğin: İkinci El Laptop" />
+          <span asp-validation-for="title" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+          <label asp-for="desc" class="form-label fw-semibold">Açıklama</label>
+          <textarea asp-for="desc" class="form-control form-control-lg" rows="3" placeholder="İlan hakkında detaylı bilgi..."></textarea>
+          <span asp-validation-for="desc" class="text-danger small"></span>
+          </div>
+
+            <div class="mb-3">
+          <label for="formFile" class="form-label">Default file input example</label>
+          <input class="form-control" type="file" id="formFile">
+        </div>
+
+
+        <div class="mb-3">
+          <label asp-for="category" class="form-label fw-semibold">Kategori</label>
+          <select asp-for="category" class="form-select form-select-lg">
+            <option value="">Kategori Seçiniz</option>
+            <option value="Elektronik">Elektronik</option>
+            <option value="Ev Eşyası">Ev Eşyası</option>
+            <option value="Giyim">Giyim</option>
+            <option value="Diğer">Diğer</option>
+          </select>
+          <span asp-validation-for="category" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-4">
+          <label asp-for="price" class="form-label fw-semibold">Fiyat (₺)</label>
+          <input asp-for="price" type="number" class="form-control form-control-lg" placeholder="Örneğin: 2500" />
+          <span asp-validation-for="price" class="text-danger small"></span>
+        </div>
+
+        <button type="submit" class="btn my-orange-bg btn-lg w-100 py-2 fw-semibold">
+          <i class="bi bi-check-circle me-2"></i>Kaydet
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
