@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ilanApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f2a9220b237e9bfe0ce735d7794c83c53ff5db0b")]
 [assembly: System.Reflection.AssemblyProductAttribute("ilanApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ilanApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
