@@ -27,15 +27,11 @@
 
 
         <div class="mb-3">
-          <label asp-for="category" class="form-label fw-semibold">Kategori</label>
-          <select asp-for="category" class="form-select form-select-lg">
+          <label asp-for="CategoryId" class="form-label fw-semibold">Kategori</label>
+          <select asp-for="CategoryId" class="form-select form-select-lg" asp-items="ViewBag.Categories">
             <option value="">Kategori Seçiniz</option>
-            <option value="Elektronik">Elektronik</option>
-            <option value="Ev Eşyası">Ev Eşyası</option>
-            <option value="Giyim">Giyim</option>
-            <option value="Diğer">Diğer</option>
           </select>
-          <span asp-validation-for="category" class="text-danger small"></span>
+          <span asp-validation-for="CategoryId" class="text-danger small"></span>
         </div>
 
         <div class="mb-4">

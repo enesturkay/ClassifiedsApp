@@ -1,11 +1,14 @@
+@{
+  Layout= "_HomeLayout";
+}
 @using ilanApp.Models
 
-@model List<advertInfo>
+@model AdvertViewModel
 <div class="container my-3">
 
 <div class="row g-4">
 
-@foreach (advertInfo crd in Model)
+@foreach (advertInfo crd in Model.AdvertsV)
  {
 
    <div class="col-lg-3 col-md-6 col-6">

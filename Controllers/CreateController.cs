@@ -1,5 +1,7 @@
+using System.ComponentModel.Design;
 using ilanApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ilanApp.Controllers
 {
@@ -7,6 +9,7 @@ namespace ilanApp.Controllers
     {
         public IActionResult Advert()
         {
+            ViewBag.Categories = new SelectList(Repository.categories, "CategoryId", "Name");
             return View();
         }
         [HttpPost]
@@ -25,7 +28,14 @@ namespace ilanApp.Controllers
         }
         public IActionResult AdvertDetails(int id)
         {
-            return View(Repository.GetById(id));
+            var advert = Repository.GetById(id);
+            var viewModel = new AdvertViewModel
+            {
+                AdvertsV = new List<advertInfo> { advert },
+                CategoriesV = Repository.categories,
+                SelectedCategory = advert.CategoryId.ToString()
+            };
+            return View(viewModel);
         }
     }
 }

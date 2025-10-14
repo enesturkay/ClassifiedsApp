@@ -26,7 +26,16 @@
 </a>
 
 
-   
+    <!-- Sağ: Arama ve Dropdown -->
+    <div class="d-flex justify-content-center gap-1">
+      <form class="d-flex" role="search" method="get" asp-controller="Home" asp-action="Index">
+        <input class="form-control" type="search" placeholder="Arama yap" value="@ViewBag.SearchString" aria-label="Search" name="SearchString" />
+    </form>
+    <form asp-controller="Home" asp-action="Index" method="get">     
+      <select class="form-select" name="Category" aria-label="Default select example" asp-items="@(new SelectList(Model.CategoriesV, "CategoryId", "Name",Model.SelectedCategory));"  onchange="this.form.submit()">
+          <option value="0">Kategori Seç</option>
+      </select>
+    </form>
 
     </div>
 
