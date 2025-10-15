@@ -13,10 +13,20 @@ namespace ilanApp.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Advert(advertInfo model)
+        public async Task<IActionResult> Advert(advertInfo model, IFormFile formFile)
         {
+            string[] allowedExtensions = new[] { "jpg", "png", "jpeg" };
+            var extension = Path.GetExtension(formFile.FileName);
+            var randomFileName = string.Format($"{Guid.NewGuid().ToString()}{extension}");
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/image", randomFileName);
+  
             if (ModelState.IsValid)
             {
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await formFile.CopyToAsync(stream);
+                }
+                model.image = "/image/"+randomFileName;
                 model.id = Repository.AdvertInfo.Count();
                 Repository.CreateAdvert(model);
                 return RedirectToAction("Index", "Home");

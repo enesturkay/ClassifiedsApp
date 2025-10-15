@@ -9,16 +9,16 @@ namespace ilanApp.Models
         public int id { get; set; }
         [Required (ErrorMessage ="Lütfen Bir başlık belirleyin.")]
         public string? title { get; set; }
-        [Required]
+        [Required (ErrorMessage ="Lütfen Bir açıklama belirleyin.")]
         public string? desc { get; set; }
        
 
         public string? image { get; set; }
-        [Required]
-
+        
+        [Required (ErrorMessage ="Lütfen Bir Kategori belirleyin.")]
         public int CategoryId { get; set; }
         [Required (ErrorMessage ="Lütfen bir fiyat belirleyin.")]
-
-        public int price { get; set; }
+        [Range(0,100000000)]
+        public int? price { get; set; }
     }
 }

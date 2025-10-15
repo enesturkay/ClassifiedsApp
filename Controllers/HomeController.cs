@@ -12,7 +12,7 @@ namespace ilanApp.Controllers
             if (!String.IsNullOrEmpty(SearchString))
             {
                 ViewBag.SearchString = SearchString;
-                advertData = advertData.Where(a => a.title.ToLower().Contains(SearchString)).ToList();
+                advertData = advertData.Where(a => a.title!.ToLower().Contains(SearchString)).ToList();
             }
             if (!String.IsNullOrEmpty(Category) && Category != "0")
             {
