@@ -5,7 +5,7 @@ namespace ilanApp.Models
 {
     public class advertInfo
     {
-        [BindNever]
+      
         public int id { get; set; }
         [Required (ErrorMessage ="Lütfen Bir başlık belirleyin.")]
         public string? title { get; set; }
