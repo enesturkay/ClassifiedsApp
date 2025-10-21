@@ -1,13 +1,20 @@
 using System.ComponentModel.Design;
 using System.Net.NetworkInformation;
 using ilanApp.Models;
+using ilanApp.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace ilanApp.Controllers
 {
     public class CreateController : Controller
     {
+        private readonly DBContext _context;
+        public CreateController(DBContext context)
+        {
+            _context = context;
+        }
         public IActionResult Advert()
         {
 
@@ -16,6 +23,7 @@ namespace ilanApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Advert(advertInfo model, IFormFile formFile)
         {
+            
             string[] allowedExtensions = new[] { ".jpg", ".png", ".jpeg" }; 
 
 
@@ -36,7 +44,8 @@ namespace ilanApp.Controllers
                 }
                 model.image = "/image/" + randomFileName;
                 model.id = Repository.AdvertInfo.Count() + 1;
-                Repository.CreateAdvert(model);
+                _context.AdvertInfs.Add(model);
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
             }
             else

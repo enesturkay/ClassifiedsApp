@@ -1,28 +1,37 @@
 using ilanApp.Models;
+using ilanApp.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace ilanApp.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(string SearchString,string Category)
+        private readonly DBContext _context;
+        public HomeController(DBContext context)
         {
-            List<advertInfo> advertData = Repository.AdvertInfo;
+            _context = context;
+        }
+        public async Task<IActionResult> Index(string SearchString,string Category)
+        {
+            IQueryable<advertInfo> query = _context.AdvertInfs;
             if (!String.IsNullOrEmpty(SearchString))
             {
                 ViewBag.SearchString = SearchString;
-                advertData = advertData.Where(a => a.title!.ToLower().Contains(SearchString)).ToList();
+                SearchString = SearchString.ToLower();
+                query = query.Where(a => a.title!.ToLower().Contains(SearchString));
             }
             if (!String.IsNullOrEmpty(Category) && Category != "0")
             {
-                advertData = advertData.Where(a => a.CategoryId == int.Parse(Category)).ToList();
+               query = query.Where(a => a.CategoryId == int.Parse(Category));
             }
-        
+            List<advertInfo> advertData = query.ToList();
+
             var AdvertViewModel = new AdvertViewModel
             {
                 AdvertsV = advertData,
-                CategoriesV = Repository.categories,
+                CategoriesV = await _context.categoriesInfs.ToListAsync(),
                 SelectedCategory = Category
             };
             return View(AdvertViewModel);
