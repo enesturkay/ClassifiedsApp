@@ -16,7 +16,7 @@ namespace ilanApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Advert(advertInfo model, IFormFile formFile)
         {
-            //string[] allowedExtensions = new[] { "jpg", "png", "jpeg" }; necessary!
+            string[] allowedExtensions = new[] { ".jpg", ".png", ".jpeg" }; 
 
 
 
@@ -24,9 +24,12 @@ namespace ilanApp.Controllers
             {
 
                 var extension = Path.GetExtension(formFile.FileName);
-                var randomFileName = string.Format($"{Guid.NewGuid().ToString()}{extension}");
+                var randomFileName = string.Format($"{Guid.NewGuid()}{extension}");
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/image", randomFileName);
-
+                if(!allowedExtensions.Contains(extension.ToLower()))
+                {
+                    return BadRequest("Yanlış Dosya uzantısı girildi.");
+                }
                 using (var stream = new FileStream(path, FileMode.Create))
                 {
                     await formFile.CopyToAsync(stream);
@@ -45,7 +48,7 @@ namespace ilanApp.Controllers
         {
             if (id == null) return NotFound();
             var advert = Repository.GetById(id);
-            if (id == null) return NotFound();
+            if (advert == null) return NotFound();
             var viewModel = new AdvertViewModel
             {
                 AdvertsV = new List<advertInfo> { advert! },
