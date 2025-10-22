@@ -28,7 +28,7 @@
 
         <div class="mb-3">
           <label asp-for="CategoryId" class="form-label fw-semibold">Kategori</label>
-          <select asp-for="CategoryId" class="form-select form-select-lg" asp-items="@(new SelectList(Repository.categories, "CategoryId", "Name"))">
+          <select asp-for="CategoryId" class="form-select form-select-lg" asp-items="ViewBag.categories">
             <option value="">Kategori Seçiniz</option>
           </select>
           <span asp-validation-for="CategoryId" class="text-danger small"></span>

@@ -15,17 +15,18 @@ namespace ilanApp.Controllers
         {
             _context = context;
         }
-        public IActionResult Advert()
-        {
 
+        public async Task<IActionResult> Advert()
+        {
+            var categoriesList = await _context.categoriesInfs.ToListAsync();
+            ViewBag.categories = new SelectList(categoriesList, "CategoryId", "Name");
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Advert(advertInfo model, IFormFile formFile)
         {
-            
-            string[] allowedExtensions = new[] { ".jpg", ".png", ".jpeg" }; 
 
+            string[] allowedExtensions = new[] { ".jpg", ".png", ".jpeg" };
 
 
             if (ModelState.IsValid)
@@ -34,7 +35,7 @@ namespace ilanApp.Controllers
                 var extension = Path.GetExtension(formFile.FileName);
                 var randomFileName = string.Format($"{Guid.NewGuid()}{extension}");
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/image", randomFileName);
-                if(!allowedExtensions.Contains(extension.ToLower()))
+                if (!allowedExtensions.Contains(extension.ToLower()))
                 {
                     return BadRequest("Yanlış Dosya uzantısı girildi.");
                 }
@@ -43,7 +44,6 @@ namespace ilanApp.Controllers
                     await formFile.CopyToAsync(stream);
                 }
                 model.image = "/image/" + randomFileName;
-                model.id = Repository.AdvertInfo.Count() + 1;
                 _context.AdvertInfs.Add(model);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
@@ -67,16 +67,17 @@ namespace ilanApp.Controllers
             return View(viewModel);
         }
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
-            var advert = Repository.GetById(id);
-            if (id == null) return NotFound();
-            ViewBag.Categories = new SelectList(Repository.categories, "CategoryId", "Name");
+            var advert = await _context.AdvertInfs.FindAsync(id);
+            if (advert == null) return NotFound();
+            ViewBag.Categories = new SelectList(_context.categoriesInfs, "CategoryId", "Name");
             return View(advert);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit( advertInfo Advert, IFormFile? formFile)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(advertInfo Advert, IFormFile? formFile)
         {
             Console.WriteLine($"Edit çağrıldı, id = {Advert.id}");
 
@@ -91,11 +92,19 @@ namespace ilanApp.Controllers
                     {
                         await formFile.CopyToAsync(stream);
                     }
-                    Advert.image ="/image/"+ randomFileName;
+                    Advert.image = "/image/" + randomFileName;
                 }
-               
-                Repository.EditbyId(Advert);
-                return RedirectToAction("Index", "Home");
+                try
+                {
+                    _context.Update(Advert);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index", "Home");
+
+                }
+                catch (Exception)
+                {
+                    return NotFound();
+                }
             }
             return View(Advert);
         }
