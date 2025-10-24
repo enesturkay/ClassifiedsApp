@@ -5,17 +5,42 @@ using ilanApp.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ilanApp.Controllers
 {
     public class CreateController : Controller
     {
+
         private readonly DBContext _context;
         public CreateController(DBContext context)
         {
             _context = context;
         }
+        public async Task<IActionResult> Removes(int? id)
+        {
+             if (id == null) return NotFound();
+            var forRemove = await _context.AdvertInfs.FindAsync(id);
+            if (forRemove == null) return NotFound();
+           
+            return View(forRemove);
+        }
+        [HttpPost] 
+        public async Task<IActionResult> Removes(advertInfo Advert )
+        {
+                try
+                {
+                     _context.AdvertInfs.Remove(Advert);
+                     await _context.SaveChangesAsync();
+                    return RedirectToAction("Index", "Home");
 
+                }
+                catch (Exception)
+                {
+                    return NotFound();
+                }
+           
+        }
         public async Task<IActionResult> Advert()
         {
             var categoriesList = await _context.categoriesInfs.ToListAsync();
@@ -53,15 +78,15 @@ namespace ilanApp.Controllers
                 return View(model);
             }
         }
-        public IActionResult AdvertDetails(int? id)
+        public async Task<IActionResult> AdvertDetails(int? id)
         {
             if (id == null) return NotFound();
-            var advert = Repository.GetById(id);
+            var advert = await _context.AdvertInfs.FindAsync(id);
             if (advert == null) return NotFound();
             var viewModel = new AdvertViewModel
             {
                 AdvertsV = new List<advertInfo> { advert! },
-                CategoriesV = Repository.categories,
+                CategoriesV =await _context.categoriesInfs.ToListAsync(),
                 SelectedCategory = advert!.CategoryId.ToString()
             };
             return View(viewModel);

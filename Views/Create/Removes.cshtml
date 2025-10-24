@@ -1,0 +1,26 @@
+@using ilanApp.Models
+@model advertInfo
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sil</title>
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow p-4" style="max-width: 400px; width: 100%;">
+      <h4 class="text-center mb-3 text-danger">Silme Onayı</h4>
+      <p class="text-center mb-4">Bu öğeyi silmek istediğinize emin misiniz?<br><strong>Bu işlem geri alınamaz.</strong></p>
+
+      <div class="d-flex justify-content-between">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary w-45">İptal</a>
+        <form asp-controller="Create" asp-action="Removes"  method="post">
+          <input type="hidden" asp-for="id" > 
+          <button type="submit" class="btn btn-danger w-45">Evet, Sil</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
